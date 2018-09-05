@@ -15,7 +15,7 @@ class M73ETA(octoprint.plugin.OctoPrintPlugin):
 
   def get_update_information(*args, **kwargs):
     return dict(
-        updateplugindemo=dict(
+        m73etaoverride=dict(
             displayName=self._plugin_name,
             displayVersion=self._plugin_version,
 
