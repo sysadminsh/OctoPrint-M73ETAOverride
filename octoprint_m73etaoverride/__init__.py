@@ -1,7 +1,7 @@
+from __future__ import absolute_import
 import octoprint.plugin
 import re
 from octoprint.printer.estimation import PrintTimeEstimator
-from __future__ import absolute_import
 
 m73time = 1
 
@@ -39,6 +39,8 @@ class M73PrintTimeEstimator(PrintTimeEstimator):
 
 def m73_create_estimator_factory(*args, **kwargs):
     return M73PrintTimeEstimator
+
+__plugin_name__ = "M73 Eta Override"
 
 def __plugin_load__():
   global __plugin_implementation__

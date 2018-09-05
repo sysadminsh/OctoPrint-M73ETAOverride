@@ -9,7 +9,7 @@ The last Sli3cr Prusa Edition implemented M73 gcode injecting to the generated g
 Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
 or manually using this URL:
 
-    https://github.com/sysadminsh/OctoPrint-M73ETAOverride
+    https://github.com/sysadminsh/OctoPrint-M73ETAOverride/archive/master.zip
 
 
 ## Configuration
