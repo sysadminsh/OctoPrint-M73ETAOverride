@@ -40,7 +40,7 @@ class M73PrintTimeEstimator(PrintTimeEstimator):
 def m73_create_estimator_factory(*args, **kwargs):
     return M73PrintTimeEstimator
 
-__plugin_name__ = "M73 Eta Override"
+__plugin_name__ = "M73 ETA Override"
 
 def __plugin_load__():
   global __plugin_implementation__
