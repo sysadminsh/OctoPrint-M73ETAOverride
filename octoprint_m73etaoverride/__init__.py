@@ -1,6 +1,7 @@
 import octoprint.plugin
 import re
 from octoprint.printer.estimation import PrintTimeEstimator
+from __future__ import absolute_import
 
 m73time = 1
 
