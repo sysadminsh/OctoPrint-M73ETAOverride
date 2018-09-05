@@ -1,8 +1,8 @@
-# OctoPrint M73 Eta Override
+# OctoPrint M73 ETA Override
 
 Plugin that overrides OctoPrint ETA to values from last M73 gcode sent to the printer.
 
-Very usable with Prusa Slic3r which is adding M73 to generated gcodes and which is better than normal estimation.
+The last Sli3cr Prusa Edition implemented M73 gcode injecting to the generated gcodes. This M73 estimations works a much better for Prusa printers than normal OctoPrint ETA estimator. M73 are displayed on Prusa LCD already directly after receiving gcode so there is nothing to change but I think that it will be good to make this better estimation available also on other OctoPrint sources (web/mobile etc) so this plugin will override OctoPrint estimation with estimation from last M73 gcode sended.
 
 ## Setup
 
