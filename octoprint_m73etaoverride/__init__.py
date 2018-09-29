@@ -5,7 +5,7 @@ from octoprint.printer.estimation import PrintTimeEstimator
 
 m73time = 1
 
-class M73ETA(octoprint.plugin.OctoPrintPlugin):
+class M73ETA(octoprint.plugin.OctoPrintPlugin,octoprint.plugin.RestartNeedingPlugin,octoprint.plugin.ReloadNeedingPlugin):
   def handle_m73(self, comm_instance, phase, cmd, cmd_type, gcode, *args, **kwargs):
     global m73time
     if gcode and gcode == "M73":
@@ -13,7 +13,7 @@ class M73ETA(octoprint.plugin.OctoPrintPlugin):
       if m:
         m73time = m.group(0)
 
-  def get_update_information(*args, **kwargs):
+  def get_update_information(self):
     return dict(
         m73etaoverride=dict(
             displayName=self._plugin_name,
