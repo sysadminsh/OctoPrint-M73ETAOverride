@@ -3,7 +3,7 @@ import octoprint.plugin
 import re
 from octoprint.printer.estimation import PrintTimeEstimator
 
-m73time = 1
+m73time = None
 
 class M73ETA(octoprint.plugin.OctoPrintPlugin,octoprint.plugin.RestartNeedingPlugin,octoprint.plugin.ReloadNeedingPlugin):
   def handle_m73(self, comm_instance, phase, cmd, cmd_type, gcode, *args, **kwargs):
@@ -30,10 +30,14 @@ class M73ETA(octoprint.plugin.OctoPrintPlugin,octoprint.plugin.RestartNeedingPlu
 
 class M73PrintTimeEstimator(PrintTimeEstimator):
   def __init__(self, job_type):
-    pass
+    super(M73PrintTimeEstimator, self).__init__(job_type)
 
   def estimate(self, progress, printTime, cleanedPrintTime, statisticalTotalPrintTime, statisticalTotalPrintTimeType):
     global m73time
+
+    if m73time == None:
+      return super(M73PrintTimeEstimator, self).estimate(progress, printTime, cleanedPrintTime, statisticalTotalPrintTime, statisticalTotalPrintTimeType)
+
     estimates = 60 * int(m73time)
     return estimates, "estimate"
 
