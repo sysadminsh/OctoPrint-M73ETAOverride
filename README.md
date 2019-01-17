@@ -17,3 +17,7 @@ or manually using this URL:
 No configuration required. Just install plugin and it will start to overriding OctoPrint ETA with last M73 gcode.
 
 Please note that if printer is starting (heating or leveling bed) ETA will show less than one minute.
+
+Configuration note for Slic3r PE:
+With default MK2 profile, Slic3r does not use M73 codes.
+Enable "Supports remaining times" feature from printer settings.
