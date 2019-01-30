@@ -4,14 +4,23 @@ import re
 from octoprint.printer.estimation import PrintTimeEstimator
 
 m73time = None
+feedRate = 100
 
 class M73ETA(octoprint.plugin.OctoPrintPlugin,octoprint.plugin.RestartNeedingPlugin,octoprint.plugin.ReloadNeedingPlugin):
   def handle_m73(self, comm_instance, phase, cmd, cmd_type, gcode, *args, **kwargs):
     global m73time
-    if gcode and gcode == "M73":
-      m = re.search('(?<=R)\w+', cmd)
+    global feedRate
+
+    # Feedrate
+    if gcode == "M220":
+      m = re.search('(?<=S)\d+(\.\d+)?', cmd)
       if m:
-        m73time = m.group(0)
+        feedRate = float(m.group(0))
+
+    if gcode == "M73":
+      m = re.search('(?<=R)\d+(\.\d+)?', cmd)
+      if m:
+        m73time = float(m.group(0))
 
   def get_update_information(self):
     return dict(
@@ -38,7 +47,7 @@ class M73PrintTimeEstimator(PrintTimeEstimator):
     if m73time == None:
       return super(M73PrintTimeEstimator, self).estimate(progress, printTime, cleanedPrintTime, statisticalTotalPrintTime, statisticalTotalPrintTimeType)
 
-    estimates = 60 * int(m73time)
+    estimates = int(round(60 * m73time / (feedRate / 100.0)))
     return estimates, "estimate"
 
 def m73_create_estimator_factory(*args, **kwargs):
