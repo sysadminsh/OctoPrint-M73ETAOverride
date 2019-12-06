@@ -45,6 +45,7 @@ def m73_create_estimator_factory(*args, **kwargs):
     return M73PrintTimeEstimator
 
 __plugin_name__ = "M73 ETA Override"
+__plugin_pythoncompat__ = ">=2.7,<4"
 
 def __plugin_load__():
   global __plugin_implementation__
