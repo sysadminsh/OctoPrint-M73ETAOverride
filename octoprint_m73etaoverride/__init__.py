@@ -2,6 +2,7 @@ from __future__ import absolute_import
 import octoprint.plugin
 import re
 from octoprint.printer.estimation import PrintTimeEstimator
+from octoprint.filemanager.analysis import GcodeAnalysisQueue
 
 m73time = None
 
@@ -44,6 +45,19 @@ class M73PrintTimeEstimator(PrintTimeEstimator):
 def m73_create_estimator_factory(*args, **kwargs):
     return M73PrintTimeEstimator
 
+class M73AnalysisQueue(GcodeAnalysisQueue):
+  def _do_analysis(self, high_priority=False):
+    results = super(M73AnalysisQueue, self)._do_analysis(high_priority=high_priority)
+    for line in open(self._current.absolute_path):
+      m = re.match('M73.*R(\d+)', line)
+      if m:
+        results['estimatedPrintTime'] = int(m.group(1))*60
+        break
+    return results
+
+def m73_gcode_analysis_queue(*args, **kwargs):
+  return dict(gcode=lambda finished_callback: M73AnalysisQueue(finished_callback))
+
 __plugin_name__ = "M73 ETA Override"
 
 def __plugin_load__():
@@ -54,5 +68,6 @@ def __plugin_load__():
   __plugin_hooks__ = {
     "octoprint.comm.protocol.gcode.sent": __plugin_implementation__.handle_m73,
     "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
-    "octoprint.printer.estimation.factory": m73_create_estimator_factory
+    "octoprint.printer.estimation.factory": m73_create_estimator_factory,
+    "octoprint.filemanager.analysis.factory": m73_gcode_analysis_queue
   }
